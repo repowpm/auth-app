@@ -40,8 +40,15 @@ app.get('/api/diagnostic', (req, res) => {
                      process.env.MONGODB_URI ? process.env.MONGODB_URI.substring(0, 30) + '...' : 'N/A',
     clientUrl: process.env.CLIENT_URL,
     googleClientId: process.env.GOOGLE_CLIENT_ID ? 'Configurado' : 'No configurado',
+    apiUrl: process.env.API_URL,
+    jwtSecret: process.env.JWT_SECRET ? 'Configurado' : 'No configurado',
     timestamp: new Date().toISOString()
   });
+});
+
+// Ruta de prueba simple
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Backend funcionando correctamente', timestamp: new Date().toISOString() });
 });
 
 // Rutas
