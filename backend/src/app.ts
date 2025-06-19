@@ -35,6 +35,9 @@ app.get('/api/diagnostic', (req, res) => {
     mongoUriValue: process.env.mongo_uri ? 'Configurada (mongo_uri)' : 
                    process.env.MONGO_URI ? 'Configurada (MONGO_URI)' : 
                    process.env.MONGODB_URI ? 'Configurada (MONGODB_URI)' : 'No configurada',
+    mongoUriPreview: process.env.mongo_uri ? process.env.mongo_uri.substring(0, 30) + '...' :
+                     process.env.MONGO_URI ? process.env.MONGO_URI.substring(0, 30) + '...' :
+                     process.env.MONGODB_URI ? process.env.MONGODB_URI.substring(0, 30) + '...' : 'N/A',
     clientUrl: process.env.CLIENT_URL,
     googleClientId: process.env.GOOGLE_CLIENT_ID ? 'Configurado' : 'No configurado',
     timestamp: new Date().toISOString()
