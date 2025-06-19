@@ -27,6 +27,11 @@ app.use(passport.initialize());
 
 // Ruta de diagnóstico temporal
 app.get('/api/diagnostic', (req, res) => {
+  const missingVars = [];
+  if (!process.env.API_URL) missingVars.push('API_URL');
+  if (!process.env.JWT_SECRET) missingVars.push('JWT_SECRET');
+  if (!process.env.GOOGLE_CLIENT_SECRET) missingVars.push('GOOGLE_CLIENT_SECRET');
+  
   res.json({
     message: 'Backend funcionando correctamente',
     environment: process.env.NODE_ENV,
@@ -39,9 +44,11 @@ app.get('/api/diagnostic', (req, res) => {
                      process.env.MONGO_URI ? process.env.MONGO_URI.substring(0, 30) + '...' :
                      process.env.MONGODB_URI ? process.env.MONGODB_URI.substring(0, 30) + '...' : 'N/A',
     clientUrl: process.env.CLIENT_URL,
+    apiUrl: process.env.API_URL || 'NO CONFIGURADA',
     googleClientId: process.env.GOOGLE_CLIENT_ID ? 'Configurado' : 'No configurado',
-    apiUrl: process.env.API_URL,
+    googleClientSecret: process.env.GOOGLE_CLIENT_SECRET ? 'Configurado' : 'No configurado',
     jwtSecret: process.env.JWT_SECRET ? 'Configurado' : 'No configurado',
+    missingVariables: missingVars.length > 0 ? missingVars : 'Todas configuradas',
     timestamp: new Date().toISOString()
   });
 });
