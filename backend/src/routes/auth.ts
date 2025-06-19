@@ -58,11 +58,9 @@ const googleCallbackHandler: RequestHandler = (req: Request, res: Response): voi
   }
   const user = req.user as IUser;
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET!, { expiresIn: '1d' });
-  
-  // Depuración: imprime el valor de CLIENT_URL
-  console.log('CLIENT_URL:', process.env.CLIENT_URL);
-  
   const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
+  
+  // Asegurarnos de que la URL de redirección esté correctamente formada
   const redirectUrl = `${clientUrl}/auth/google/callback?token=${encodeURIComponent(token)}`;
   console.log('Redirigiendo a:', redirectUrl);
   res.redirect(redirectUrl);
